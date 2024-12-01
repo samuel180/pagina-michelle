@@ -10,29 +10,32 @@
             padding: 0;
             min-height: 100vh;
             font-family: 'Arial', sans-serif;
-            /* Cambiamos el fondo al del primer código */
             background: linear-gradient(135deg, #f6d5f7, #fbe9d7);
+            overflow-x: hidden;
+        }
+
+        .page-wrapper {
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: background 0.5s;
-            overflow: hidden;
+            min-height: 100vh;
+            padding: 2rem 0;
+            position: relative;
         }
 
-        /* Removemos el fondo del container para que se vean los corazones */
         .container {
             width: 90%;
             max-width: 800px;
-            background: rgba(255, 255, 255, 0.85); /* Hacemos más transparente el fondo */
+            background: rgba(255, 255, 255, 0.85);
             padding: 2rem;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             text-align: center;
-            position: relative; /* Para que los corazones pasen por detrás */
-            z-index: 1; /* Para que los corazones pasen por detrás */
+            position: relative;
+            z-index: 1;
+            margin: 2rem auto;
         }
 
-        /* Estilos de corazones - ajustados para verse en toda la página */
         .hearts {
             position: fixed;
             top: 0;
@@ -46,7 +49,7 @@
         .heart {
             position: absolute;
             animation: float 4s ease-in infinite;
-            opacity: 0.8; /* Hacemos los corazones un poco transparentes */
+            opacity: 0.8;
         }
 
         @keyframes float {
@@ -93,7 +96,6 @@
             font-size: 1.1rem;
             border: none;
             border-radius: 25px;
-            /* Cambiamos el color de los botones para que coincida con el tema */
             background: linear-gradient(45deg, #e84393, #fd79a8);
             color: white;
             cursor: pointer;
@@ -142,11 +144,6 @@
             color: #e84393;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
         .final-message {
             display: none;
             white-space: pre-line;
@@ -154,6 +151,24 @@
             font-size: 1.1rem;
             line-height: 1.8;
             color: #4a4a4a;
+            max-height: 70vh;
+            overflow-y: auto;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .final-message::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .final-message::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 4px;
+        }
+
+        .final-message::-webkit-scrollbar-thumb {
+            background: rgba(232, 67, 147, 0.5);
+            border-radius: 4px;
         }
 
         .sparkle {
@@ -167,74 +182,80 @@
             0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; }
             100% { transform: translate(-50%, -50%) scale(1) rotate(180deg); opacity: 0; }
         }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
     <div class="hearts" id="hearts"></div>
-    <!-- Resto del código HTML igual que antes -->
-    <div class="container">
-        <!-- Pantalla inicial -->
-        <div class="stage active" id="stage1">
-            <h1>Hola Michelle</h1>
-            <p class="message">Tengo algo especial para ti, pero primero...</p>
-            <div class="image-container">
-                <img src="assets/img/WhatsApp Image 2024-11-10 at 16.45.48 (1).jpeg"Inicio">
+    <div class="page-wrapper">
+        <div class="container">
+            <!-- Pantalla inicial -->
+            <div class="stage active" id="stage1">
+                <h1>Hola Michelle</h1>
+                <p class="message">Tengo algo especial para ti, pero primero...</p>
+                <div class="image-container">
+                    <img src="assets/img/WhatsApp Image 2024-11-10 at 16.45.48 (1).jpeg" alt="Inicio">
+                </div>
+                <button class="button" onclick="nextStage('stage2')">¿Comenzamos?</button>
             </div>
-            <button class="button" onclick="nextStage('stage2')">¿Comenzamos?</button>
-        </div>
 
-        <!-- Primera pregunta -->
-        <div class="stage" id="stage2">
-            <h2>¿Recuerdas dónde nos conocimos?</h2>
-            <div class="image-container">
-                <img src="assets/img/WhatsApp Image 2024-11-10 at 17.46.31.jpeg" alt="Música">
+            <!-- Primera pregunta -->
+            <div class="stage" id="stage2">
+                <h2>¿Recuerdas dónde nos conocimos?</h2>
+                <div class="image-container">
+                    <img src="assets/img/WhatsApp Image 2024-11-10 at 17.46.31.jpeg" alt="Música">
+                </div>
+                <div class="options">
+                    <button class="button" onclick="checkAnswer('stage2', false)">En el patio</button>
+                    <button class="button" onclick="checkAnswer('stage2', true)">En el curso de música</button>
+                    <button class="button" onclick="checkAnswer('stage2', false)">En la biblioteca</button>
+                </div>
             </div>
-            <div class="options">
-                <button class="button" onclick="checkAnswer('stage2', false)">En el patio</button>
-                <button class="button" onclick="checkAnswer('stage2', true)">En el curso de música</button>
-                <button class="button" onclick="checkAnswer('stage2', false)">En la biblioteca</button>
-            </div>
-        </div>
 
-        <!-- Segunda pregunta -->
-        <div class="stage" id="stage3">
-            <h2>Y ese día fue...</h2>
-            <div class="image-container">
-                <img src="assets/img/WhatsApp Image 2024-11-10 at 16.45.47.jpeg" alt="Calendario">
+            <!-- Segunda pregunta -->
+            <div class="stage" id="stage3">
+                <h2>Y ese día fue...</h2>
+                <div class="image-container">
+                    <img src="assets/img/WhatsApp Image 2024-11-10 at 16.45.47.jpeg" alt="Calendario">
+                </div>
+                <div class="options">
+                    <button class="button" onclick="checkAnswer('stage3', false)">15 de mayo</button>
+                    <button class="button" onclick="checkAnswer('stage3', true)">25 de junio</button>
+                    <button class="button" onclick="checkAnswer('stage3', false)">10 de julio</button>
+                </div>
             </div>
-            <div class="options">
-                <button class="button" onclick="checkAnswer('stage3', false)">15 de mayo</button>
-                <button class="button" onclick="checkAnswer('stage3', true)">25 de junio</button>
-                <button class="button" onclick="checkAnswer('stage3', false)">10 de julio</button>
-            </div>
-        </div>
 
-        <!-- Tercera pregunta -->
-        <div class="stage" id="stage4">
-            <h2>¿Qué es lo que más valoro de nuestra amistad?</h2>
-            <div class="image-container">
-                <img src="assets/img/WhatsApp Image 2024-11-10 at 16.46.33.jpeg" alt="Amistad">
+            <!-- Tercera pregunta -->
+            <div class="stage" id="stage4">
+                <h2>¿Qué es lo que más valoro de nuestra amistad?</h2>
+                <div class="image-container">
+                    <img src="assets/img/WhatsApp Image 2024-11-10 at 16.46.33.jpeg" alt="Amistad">
+                </div>
+                <div class="options">
+                    <button class="button" onclick="checkAnswer('stage4', false)">Los recreos juntos</button>
+                    <button class="button" onclick="checkAnswer('stage4', false)">Las risas compartidas</button>
+                    <button class="button" onclick="checkAnswer('stage4', true)">Tu confianza y fortaleza</button>
+                </div>
             </div>
-            <div class="options">
-                <button class="button" onclick="checkAnswer('stage4', false)">Los recreos juntos</button>
-                <button class="button" onclick="checkAnswer('stage4', false)">Las risas compartidas</button>
-                <button class="button" onclick="checkAnswer('stage4', true)">Tu confianza y fortaleza</button>
-            </div>
-        </div>
 
-        <!-- Mensaje final -->
-        <div class="stage" id="finalStage">
-            <h2>Michelle...</h2>
-            <div class="final-message" id="finalMessage"></div>
-            <button class="button" onclick="replayGame()">Volver a empezar</button>
+            <!-- Mensaje final -->
+            <div class="stage" id="finalStage">
+                <h2>Michelle...</h2>
+                <div class="final-message" id="finalMessage"></div>
+                <button class="button" onclick="replayGame()">Volver a empezar</button>
+            </div>
         </div>
     </div>
 
     <div class="music-controls">
         <button class="music-btn" onclick="toggleMusic()">🎵</button>
         <audio id="bgMusic" loop>
+            <source src="assets/music/Álvaro Díaz - Reina Pepiada (Lyric Video) (1).mp3" type="audio/mp3">
             <source src="assets/music/Hombres G - Te quiero (Audio Oficial).mp3" type="audio/mp3">
-            <source src="assets/music/d4vd - Here With Me [Official Music Video] - d4vdVEVO (youtube).mp3" type="audio/mp3">
         </audio>
     </div>
 
@@ -243,18 +264,18 @@
 
 Aquel 25 de junio en el curso de música, el destino me permitió conocer a alguien extraordinario. Aunque fue un simple día para muchos, para mí se convirtió en uno de los días más especiales de este año. Cada momento contigo, cada recreo compartido, cada abrazo y cada vez que estamos tomados de la mano, se han vuelto momentos que atesoro muchísimo.
 
-Admiro profundamente tu fortaleza. Eres una de las personas más valientes y maravillosas que conozco. A pesar de todo lo que has vivido, sigues siendo una persona increíblemente amable y linda. Tu capacidad de seguir adelante me inspira todos los días.
+Admiro profundamente tu fortaleza. Eres una de las personas más valientes y maravillosas que conozco. A pesar de todo lo que has vivido, sigues siendo una persona increíblemente maravillosa, amable y linda. Tu capacidad de seguir adelante me inspira todos los días.
 
-Sé que a veces la vida no es justa y que has pasado por momentos muy difíciles. Quiero que sepas que estoy aquí para ti, para escucharte, para apoyarte, para compartir juntos los buenos momentos, alegrías y también para estar en los momentos tristes o difíciles. No estás sola.
+Sé que a veces la vida no es justa y que has pasado por momentos muy difíciles. Pero quiero que sepas que estoy aquí para ti, para escucharte, para apoyarte, para compartir juntos los buenos y malos momentos, alegrías y mucho más. No estás sola, siempre me tendrás a mi.
 
-Gracias por confiar en mí, por compartir conmigo tus preocupaciones y por dejarme ser parte de tu vida. Gracias por apoyarme también cuando lo he necesitado. Nuestra amistad significa muchísimo para mí.
+Gracias por confiar en mí, por compartir conmigo tus preocupaciones y por dejarme ser parte de tu vida. Gracias por apoyarme también cuando lo he necesitado.
 
-Quizás no siempre sé encontrar las palabras correctas para ayudarte o consolarte, pero mi corazón está contigo y puedes contar conmigo siempre que me necesites.
+Quizás algunas veces no siempre sé encontrar las palabras correctas para ayudarte o consolarte, pero mi corazón está contigo y puedes contar conmigo siempre que me necesites.
 
-Eres especial, eres valiosa, y mereces todo lo bueno que la vida tiene para ofrecer. Nunca dudes de eso.
+Eres especial, eres valiosa, y mereces todo lo bueno que la vida tiene para ofrecer. Nunca dudes de eso. Te amo con todo mi corazón Michelle ❤️.
 
 Con mucho cariño,
-Tu mejor amigo Samuel Ortiz`;
+Samuel Ortiz`;
 
         // Función para crear corazones
         function createHeart() {
